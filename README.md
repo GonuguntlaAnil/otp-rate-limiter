@@ -1,6 +1,6 @@
 # OTP Rate Limiter (Spring Boot + Redis)
 
-A simple OTP rate limiting service built using Spring Boot and Redis.  
+A OTP rate limiting service built using Spring Boot and Redis.  
 It restricts how many OTP requests can be made from the same phone number or IP address within a fixed time window.
 
 ## Features
@@ -10,14 +10,6 @@ It restricts how many OTP requests can be made from the same phone number or IP 
 - Structured JSON responses (success and error)
 - Global exception handling
 - Swagger documentation
-
-## Project Structure
-src/main/java/com/anil/otpratelimiter/
-├── controller/
-├── service/
-├── dto/
-├── exception/
-└── config/
 
 
 ## How It Works
