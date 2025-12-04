@@ -1,114 +1,41 @@
-🚀 OTP Rate Limiter — Spring Boot + Redis
+# OTP Rate Limiter (Spring Boot + Redis)
 
-A production-style OTP rate limiting system built using Spring Boot 3, Redis, and Swagger.
-This service prevents abuse of OTP APIs by applying phone-number-based and IP-based rate limits.
+A simple OTP rate limiting service built using Spring Boot and Redis.  
+It restricts how many OTP requests can be made from the same phone number or IP address within a fixed time window.
 
-Perfect for learning API security, Redis caching, and real-world backend design.
+## Features
+- Limit of 3 OTP requests per phone number (10 minutes)
+- Limit of 20 requests per IP address (10 minutes)
+- Redis used for counters and TTL
+- Structured JSON responses (success and error)
+- Global exception handling
+- Swagger documentation
 
-🧠 Features
-✔ Phone Rate Limiting
+## Project Structure
+src/main/java/com/anil/otpratelimiter/
+├── controller/
+├── service/
+├── dto/
+├── exception/
+└── config/
 
-Max 3 OTP requests per phone
 
-Time window: 10 minutes
+## How It Works
+- Redis key `otp_limit:{phone}` tracks phone-based attempts  
+- Redis key `otp_ip:{ip}` tracks IP-based attempts  
+- Keys expire automatically after 10 minutes  
 
-Redis TTL auto-reset
-
-✔ IP Rate Limiting
-
-Max 20 requests per IP per 10 minutes
-
-Prevents bots / abuse
-
-✔ Swagger Documentation
-
-Available at:
-
-http://localhost:8080/docs
-
-✔ Structured JSON Responses
-
-Uses DTO models for clean and predictable API responses.
-
-✔ Global Exception Handling
-
-Graceful error responses instead of raw Spring errors.
-
-✔ Logging
-
-Logs all requests, limits, and errors for debugging.
-
-📁 Project Structure
-src/
- ├── main/
- │   ├── java/com/anil/otpratelimiter/
- │   │    ├── controller/RateLimiterController.java
- │   │    ├── service/RateLimiterService.java
- │   │    ├── dto/
- │   │    │     ├── SuccessResponse.java
- │   │    │     └── ErrorResponse.java
- │   │    ├── exception/GlobalExceptionHandler.java
- │   │    └── config/SwaggerConfig.java
- │   └── resources/application.properties
-
-🔌 How It Works
-🔸 Phone Flow
-
-User requests OTP
-
-Redis key otp_limit:{phone} increments
-
-If count > 3 → block for 10 minutes
-
-🔸 IP Flow
-
-System checks otp_ip:{ip}
-
-If count > 20 → block access
-
-📝 Example API Usage
-➤ Request
+## API Example
 POST /otp/send?phone=9876543210
+Success:{ "status": "success", "message": "OTP sent successfully." }
 
-✔ Success Response
-{
-  "status": "success",
-  "message": "OTP sent successfully."
-}
-
-❌ Rate Limit Response
-{
-  "status": "error",
-  "reason": "phone_limit_exceeded",
-  "retryAfterSeconds": 320
-}
-
-▶️ Running the Project
-1️⃣ Start Redis
-redis-server
+Rate limit exceeded:{ "status": "error", "reason": "phone_limit_exceeded" }
 
 
-Check Redis connection:
-
-redis-cli ping
-PONG
-
-2️⃣ Run Spring Boot
-mvn spring-boot:run
-
-3️⃣ Test in Swagger
-http://localhost:8080/docs
-
-🛠 Tech Stack
-
-Java 17
-
-Spring Boot 3.5
-
-Redis
-
-Spring Data Redis
-
-Lombok
-
-Swagger (SpringDoc OpenAPI)
+## Tech Stack
+- Java 17  
+- Spring Boot  
+- Redis  
+- Spring Data Redis  
+- Swagger  
+- Lombok  
