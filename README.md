@@ -27,9 +27,17 @@ src/main/java/com/anil/otpratelimiter/
 
 ## API Example
 POST /otp/send?phone=9876543210
-Success:{ "status": "success", "message": "OTP sent successfully." }
+Success:
+{ 
+"status": "success",
+"message": "OTP sent successfully."
+}
 
-Rate limit exceeded:{ "status": "error", "reason": "phone_limit_exceeded" }
+Rate limit exceeded:
+{ 
+"status": "error",
+"reason": "phone_limit_exceeded"
+}
 
 
 ## Tech Stack
